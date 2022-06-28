@@ -1,0 +1,40 @@
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Popup Login Form Design | CodingNepal</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <%- include('style.ejs'); %>
+   </head>
+      
+         
+   
+     <head>
+       <meta charset="utf-8">
+      <!----<title>Login Form Design | CodeLab</title>---->
+       <link rel="stylesheet" href="style.css">
+     </head>
+
+       <div class="wrapper">
+         <div class="title">Login Form</div>
+         <form action="/users/login" method="POST" >
+           <div class="field">
+             <input type="email" id="email" name="email" required >
+             <label>Email Address</label>
+           </div>
+           <div class="field">
+             <input type="password" id="password" name="password" required >
+             <label>Password</label>
+           </div>
+           <div class="content">
+            
+           </div>
+
+
+           <div class="field">
+             <input type="submit" value="Login">
+           </div>
+           <div class="signup-link">Not a member? <a  href="/users/signup">Signup now</a></div>
+         </form>
+       </div>
+     
