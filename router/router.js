@@ -5,13 +5,21 @@ const { route } = require("express/lib/application");
 const { hash } = require("bcrypt");
 const user = require("../models/User");
 const { send } = require("express/lib/response");
-
+const passport = require('passport')
 // const users = [];
 //create a user 
+const Authentication = require("./auth")
+
+Authentication();
+
+
+
+
+
 
 router.get("/signup", (req, res)=>{
-
     res.render("signup.ejs")
+
 })
 
 router.post("/signup", async(req,res) =>{
@@ -27,7 +35,7 @@ router.post("/signup", async(req,res) =>{
             await newUser.save();            
                 
             const users = await user.find();  
-            console.log(users) 
+            //console.log(users) 
             res.redirect("/users/login" )
          }
          
@@ -39,30 +47,59 @@ router.post("/signup", async(req,res) =>{
 
 
 
+
+
+
+router.get('/',  (req, res) => {
+    console.log(req.user.username)
+    res.render('index.ejs', { name: req.user.email })
+  })
+
+
+
+
 router.get("/login", async(req,res)=>{
     
    res.render("login.ejs")
 })
 
-router.post("/login", async(req,res)=>{
-    try {
-        const foundedUSer = await user.findOne({Email: req.body.email}).then(async(rslt)=>{
+// router.post("/login", async(req,res)=>{
+//     try {
+//         // if user is founded, res.render the index logged in page
+//         const foundedUSer = await user.findOne({Email: req.body.email}).then(async(rslt)=>{
             
-           if( await bcrypt.compare(req.body.password, rslt.Password)){
-            res.send("succefully logged"   )
-           }
-           else{
-            res.send("wrong password")
-           }
+//            if( await bcrypt.compare(req.body.password, rslt.Password)){
+//             res.send("succefully logged"   )
+//            }
+//            else{
+//                //if not, res.redirect to login with res.redrct(login.ejs, message ) and display the message on the flash-express
+//             res.send("wrong password")
+//            }
            
 
-        }).catch(()=>res.send("could not find the user"))
+//         }).catch(()=>res.send("could not find the user"))
 
-    } catch (error) {
-        res.send(error.message)
-    }
-})
+//     } catch (error) {
+//         res.send(error.message)
+//     }
+// })
 
+
+
+
+
+
+
+
+
+
+
+
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/users/',
+    failureRedirect: '/users/login'
+  }));
+  
 
 router.get("/logn", (req,res)=>{
     res.render("logn.ejs")

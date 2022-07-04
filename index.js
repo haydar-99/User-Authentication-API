@@ -6,11 +6,26 @@ const router = require("./router/router")
 const mongoose = require("mongoose")
 const env = require('dotenv').config()
 const ejs = require("ejs")
+// const router2 = require("./router/auth")
+var passport = require('passport');
+var session = require('express-session');
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.authenticate('session'));
+
+// initializePassport(passport)
  
 app.set("view engine", ejs)
 app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(express.urlencoded({extended: false}))
 app.use("/users", router)  
+// app.use("/users", router2) 
+
 
 
 mongoose
